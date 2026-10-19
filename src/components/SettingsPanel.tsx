@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   X,
@@ -8,6 +8,9 @@ import {
   RotateCcw,
   Check,
   Image as ImageIcon,
+  Maximize2,
+  Minimize2,
+  Smartphone,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useSettingsStore } from '../store/useSettingsStore';
@@ -89,6 +92,34 @@ export const SettingsPanel: React.FC = () => {
 
   const { restoreDemoBookmarks } = useBookmarkStore();
   const [isResetConfirmOpen, setIsResetConfirmOpen] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(
+    typeof document !== 'undefined' ? Boolean(document.fullscreenElement) : false
+  );
+
+  useEffect(() => {
+    const handleFsChange = () => {
+      setIsFullscreen(Boolean(document.fullscreenElement));
+    };
+    document.addEventListener('fullscreenchange', handleFsChange);
+    return () => document.removeEventListener('fullscreenchange', handleFsChange);
+  }, []);
+
+  const toggleFullscreen = async () => {
+    try {
+      if (!document.fullscreenElement) {
+        if (document.documentElement.requestFullscreen) {
+          await document.documentElement.requestFullscreen();
+          toast.success('Fullscreen mode enabled (address bar hidden)');
+        }
+      } else {
+        if (document.exitFullscreen) {
+          await document.exitFullscreen();
+        }
+      }
+    } catch {
+      toast.error('Fullscreen not supported or allowed by your browser');
+    }
+  };
 
   if (!isSettingsOpen) return null;
 
@@ -514,6 +545,54 @@ export const SettingsPanel: React.FC = () => {
                     </button>
                   ))}
                 </div>
+              </div>
+
+              {/* Mobile Address Bar & Fullscreen Mode */}
+              <div
+                style={{
+                  background: 'rgba(255, 255, 255, 0.03)',
+                  border: '1px solid var(--surface-border)',
+                  borderRadius: '14px',
+                  padding: '12px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '8px',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Smartphone size={15} style={{ color: 'var(--accent-primary)' }} />
+                    <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-main)' }}>
+                      Hide Address Bar
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={toggleFullscreen}
+                    className="glass-button"
+                    style={{
+                      padding: '4px 10px',
+                      fontSize: '11px',
+                      borderRadius: '8px',
+                      gap: '4px',
+                    }}
+                  >
+                    {isFullscreen ? (
+                      <>
+                        <Minimize2 size={12} />
+                        <span>Exit</span>
+                      </>
+                    ) : (
+                      <>
+                        <Maximize2 size={12} />
+                        <span>Full Screen</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+                <p style={{ fontSize: '11px', color: 'var(--text-dim)', lineHeight: 1.4 }}>
+                  To permanently remove the Chrome address bar on mobile: tap Chrome menu (⋮) → <strong style={{ color: 'var(--text-main)' }}>Add to Home screen</strong> or <strong style={{ color: 'var(--text-main)' }}>Install App</strong>.
+                </p>
               </div>
 
             </div>
