@@ -5,6 +5,9 @@ import type { Settings, ThemeMode, WallpaperPreset, GridDensity } from '../types
 export const WALLPAPER_MAP: Record<WallpaperPreset, string> = {
   twilight: "url('/wallpapers/landscape-twilight.jpg')",
   alpine: "url('/wallpapers/landscape-alpine.jpg')",
+  aurora: "url('/wallpapers/landscape-aurora.jpg')",
+  nebula: "url('/wallpapers/landscape-nebula.jpg')",
+  forest: "url('/wallpapers/landscape-forest.jpg')",
   studio: "linear-gradient(135deg, #1e293b 0%, #0f172a 100%)",
   custom: '',
 };

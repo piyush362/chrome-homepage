@@ -36,6 +36,24 @@ const WALLPAPER_PRESETS: WallpaperOption[] = [
     isImage: true,
   },
   {
+    id: 'aurora',
+    name: 'Nordic Aurora Borealis',
+    preview: '/wallpapers/landscape-aurora.jpg',
+    isImage: true,
+  },
+  {
+    id: 'nebula',
+    name: 'Cosmic Nebula Peaks',
+    preview: '/wallpapers/landscape-nebula.jpg',
+    isImage: true,
+  },
+  {
+    id: 'forest',
+    name: 'Misty Redwood Sanctuary',
+    preview: '/wallpapers/landscape-forest.jpg',
+    isImage: true,
+  },
+  {
     id: 'studio',
     name: 'Deep Studio Slate',
     preview: 'linear-gradient(135deg, #1e293b, #0f172a)',

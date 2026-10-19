@@ -2,7 +2,14 @@ export type SearchEngine = 'google';
 
 export type ThemeMode = 'dark' | 'light';
 
-export type WallpaperPreset = 'twilight' | 'alpine' | 'studio' | 'custom';
+export type WallpaperPreset =
+  | 'twilight'
+  | 'alpine'
+  | 'aurora'
+  | 'nebula'
+  | 'forest'
+  | 'studio'
+  | 'custom';
 
 export type GridDensity = 'compact' | 'normal' | 'comfortable';
 
