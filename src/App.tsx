@@ -1,84 +1,55 @@
 import { useEffect } from 'react';
 import { Toaster } from 'sonner';
-import { useStore } from './store/useStore';
+import { useSettingsStore } from './store/useSettingsStore';
 import { Header } from './components/Header';
 import { SearchBar } from './components/SearchBar';
-import { BookmarksGrid } from './components/BookmarksGrid';
-import { QuickNotesWidget } from './components/QuickNotesWidget';
-import { AddBookmarkModal } from './components/AddBookmarkModal';
-import { SettingsDrawer } from './components/SettingsDrawer';
+import { BookmarkGrid } from './components/BookmarkGrid';
+import { BookmarkEditorModal } from './components/BookmarkEditorModal';
+import { FolderManagerModal } from './components/FolderManagerModal';
+import { SettingsPanel } from './components/SettingsPanel';
 
 export function App() {
-  const { theme } = useStore();
+  const { applyCssVariables } = useSettingsStore();
 
-  // Sync background theme with document.body attribute
   useEffect(() => {
-    document.body.setAttribute('data-theme', theme.backgroundTheme);
-  }, [theme.backgroundTheme]);
+    applyCssVariables();
+  }, [applyCssVariables]);
 
   return (
     <>
-      {/* Toast Notification Hub */}
+      {/* Toast Notification Provider */}
       <Toaster
-        theme="dark"
-        position="bottom-right"
+        position="bottom-center"
         richColors
         toastOptions={{
           style: {
-            background: 'rgba(18, 22, 34, 0.92)',
+            background: 'var(--glass-surface)',
             backdropFilter: 'blur(20px)',
             WebkitBackdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255, 255, 255, 0.15)',
-            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.15)',
-            color: '#f8fafc',
+            border: '1px solid var(--surface-border)',
+            boxShadow: 'var(--glass-shadow)',
+            color: 'var(--text-main)',
             fontFamily: 'var(--font-sans)',
             borderRadius: '14px',
+            fontSize: '13px',
           },
         }}
       />
 
-      {/* Ambient Moving Mesh Lights */}
-      <div className="ambient-background" aria-hidden="true">
-        <div className="ambient-orb orb-one" />
-        <div className="ambient-orb orb-two" />
-        <div className="ambient-orb orb-three" />
-        <div className="ambient-noise" />
-      </div>
+      {/* Ambient Moving Liquid Glass Lighting */}
+      <div className="ambient-background-layer" aria-hidden="true" />
 
-      {/* Main Page Content */}
-      <div className="app-container">
+      {/* Main Mobile-First Chrome Homepage Container */}
+      <main className="homepage-container">
         <Header />
         <SearchBar />
-        <BookmarksGrid />
-        <QuickNotesWidget />
-
-        {/* Subtle Footer */}
-        <footer
-          style={{
-            marginTop: 'auto',
-            paddingTop: '20px',
-            fontSize: '12px',
-            color: 'var(--text-dim)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '16px',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-          }}
-        >
-          <span>
-            Tip: Press <kbd style={{ padding: '2px 5px', borderRadius: '4px', background: 'rgba(255,255,255,0.08)' }}>/</kbd> to search
-          </span>
-          <span>•</span>
-          <span>Drag shortcuts to sort</span>
-          <span>•</span>
-          <span>Powered by React, Motion, Zustand & dnd-kit</span>
-        </footer>
-      </div>
+        <BookmarkGrid />
+      </main>
 
       {/* Interactive Modals and Drawers */}
-      <AddBookmarkModal />
-      <SettingsDrawer />
+      <BookmarkEditorModal />
+      <FolderManagerModal />
+      <SettingsPanel />
     </>
   );
 }

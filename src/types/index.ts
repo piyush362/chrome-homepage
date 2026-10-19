@@ -1,30 +1,35 @@
-export type SearchEngine = 'google' | 'duckduckgo' | 'bing' | 'github' | 'youtube' | 'perplexity';
+export type SearchEngine = 'google';
+
+export type ThemeMode = 'dark' | 'light';
+
+export type WallpaperPreset = 'twilight' | 'alpine' | 'studio' | 'custom';
+
+export type GridDensity = 'compact' | 'normal' | 'comfortable';
 
 export interface Bookmark {
   id: string;
   title: string;
   url: string;
-  icon?: string; // e.g. "SiGithub", "SiYoutube", "Globe", "Code", etc.
-  category?: string;
+  faviconUrl?: string;
+  iconName?: string;
   color?: string;
-  clicks?: number;
-}
-
-export type BackgroundTheme = 'aurora' | 'cyberpunk' | 'deepspace' | 'sunset' | 'emerald';
-
-export interface ThemeConfig {
-  backgroundTheme: BackgroundTheme;
-  glassIntensity: 'subtle' | 'medium' | 'deep';
-  clockFormat24: boolean;
-  showSeconds: boolean;
-  showGreeting: boolean;
-  showWeather: boolean;
-  showNotesWidget: boolean;
-}
-
-export interface QuickNote {
-  id: string;
-  text: string;
-  completed: boolean;
+  folderId?: string;
   createdAt: number;
+}
+
+export interface Folder {
+  id: string;
+  name: string;
+  color?: string;
+}
+
+export interface Settings {
+  themeMode: ThemeMode;
+  wallpaperPreset: WallpaperPreset;
+  customWallpaperUrl: string;
+  glassOpacity: number; // 0.2 to 0.95
+  glassBlur: number; // 6 to 32
+  cardRadius: number; // 8 to 28
+  accentColor: string;
+  gridDensity: GridDensity;
 }
