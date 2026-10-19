@@ -12,7 +12,7 @@ export const Header: React.FC = () => {
 
   return (
     <motion.header
-      initial={{ opacity: 0, y: -8 }}
+      initial={{ opacity: 0, y: -6 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: 'easeOut' }}
       style={{
@@ -20,51 +20,26 @@ export const Header: React.FC = () => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        minHeight: '44px',
-        padding: '2px 0',
+        minHeight: '36px',
+        padding: '0 4px',
+        marginBottom: '6px',
       }}
     >
-      {/* Dynamic Date Capsule (Left) */}
-      <motion.div
-        whileHover={{ y: -1, scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        className="glass-surface"
+      {/* Subtle clean date indicator on the left */}
+      <div
         style={{
-          display: 'inline-flex',
+          display: 'flex',
           alignItems: 'center',
-          gap: '8px',
-          height: '38px',
-          padding: '0 14px',
-          borderRadius: '9999px',
-          cursor: 'default',
+          gap: '6px',
+          fontSize: '12px',
+          fontWeight: 500,
+          color: 'var(--text-dim)',
           userSelect: 'none',
         }}
-        title="Today's Date"
       >
-        {/* Pulsing Live Beacon */}
-        <motion.span
-          animate={{ scale: [1, 1.25, 1], opacity: [0.75, 1, 0.75] }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
-          style={{
-            width: '7px',
-            height: '7px',
-            borderRadius: '50%',
-            backgroundColor: '#10b981',
-            boxShadow: '0 0 8px #10b981',
-            display: 'inline-block',
-            flexShrink: 0,
-          }}
-        />
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '13px' }}>
-          <span style={{ fontWeight: 600, color: 'var(--text-main)', letterSpacing: '-0.2px' }}>
-            {dayName},
-          </span>
-          <span style={{ fontWeight: 400, color: 'var(--text-muted)', letterSpacing: '-0.2px' }}>
-            {monthDay}
-          </span>
-        </div>
-      </motion.div>
+        <span style={{ color: 'var(--text-main)', fontWeight: 600 }}>{dayName},</span>
+        <span>{monthDay}</span>
+      </div>
 
       {/* Segmented Glass Capsule: Theme Toggle + Settings (Right) */}
       <div
