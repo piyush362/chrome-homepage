@@ -167,14 +167,14 @@ export const BookmarkCard: React.FC<BookmarkCardProps> = ({ bookmark, isOverlay 
       onClick={handleCardClick}
     >
       <motion.div
-        whileHover={{ y: -3, scale: 1.02 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={{ y: -3, scale: 1.03 }}
+        whileTap={{ scale: 0.94 }}
         style={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '8px',
-          padding: '10px 6px',
+          gap: '6px',
+          padding: '4px 2px',
           borderRadius: 'var(--card-radius)',
           cursor: 'pointer',
           position: 'relative',
@@ -185,9 +185,9 @@ export const BookmarkCard: React.FC<BookmarkCardProps> = ({ bookmark, isOverlay 
         <div
           className="glass-surface"
           style={{
-            width: '56px',
-            height: '56px',
-            borderRadius: '18px',
+            width: '62px',
+            height: '62px',
+            borderRadius: '20px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -199,7 +199,7 @@ export const BookmarkCard: React.FC<BookmarkCardProps> = ({ bookmark, isOverlay 
               ? `1px solid ${bookmark.color}45`
               : '1px solid var(--surface-border)',
             boxShadow: bookmark.color
-              ? `0 8px 18px -4px ${bookmark.color}30, var(--glass-specular)`
+              ? `0 8px 20px -4px ${bookmark.color}35, var(--glass-specular)`
               : 'var(--glass-shadow)',
           }}
         >
@@ -210,9 +210,9 @@ export const BookmarkCard: React.FC<BookmarkCardProps> = ({ bookmark, isOverlay 
               alt=""
               onError={() => setImgError(true)}
               style={{
-                width: '26px',
-                height: '26px',
-                borderRadius: '6px',
+                width: '30px',
+                height: '30px',
+                borderRadius: '7px',
                 objectFit: 'contain',
               }}
               loading="lazy"
@@ -220,11 +220,11 @@ export const BookmarkCard: React.FC<BookmarkCardProps> = ({ bookmark, isOverlay 
           ) : bookmark.iconName ? (
             <IconResolver
               name={bookmark.iconName}
-              size={24}
+              size={28}
               color={bookmark.color || 'var(--text-main)'}
             />
           ) : (
-            <Globe size={24} style={{ color: bookmark.color || 'var(--text-main)' }} />
+            <Globe size={28} style={{ color: bookmark.color || 'var(--text-main)' }} />
           )}
         </div>
 
@@ -235,7 +235,7 @@ export const BookmarkCard: React.FC<BookmarkCardProps> = ({ bookmark, isOverlay 
             fontWeight: 500,
             color: 'var(--text-main)',
             textAlign: 'center',
-            maxWidth: '82px',
+            maxWidth: '78px',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
@@ -257,7 +257,7 @@ export const BookmarkCard: React.FC<BookmarkCardProps> = ({ bookmark, isOverlay 
               className="glass-surface bookmark-menu-area"
               style={{
                 position: 'absolute',
-                top: '64px',
+                top: '72px',
                 left: '50%',
                 transform: 'translateX(-50%)',
                 padding: '6px',

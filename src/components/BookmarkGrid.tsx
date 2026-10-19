@@ -158,31 +158,32 @@ export const BookmarkGrid: React.FC = () => {
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  gap: '8px',
-                  padding: '10px 6px',
+                  gap: '6px',
+                  padding: '4px 2px',
                   borderRadius: 'var(--card-radius)',
                   cursor: 'pointer',
                   userSelect: 'none',
                 }}
               >
                 <motion.div
-                  whileHover={{ y: -3, scale: 1.02 }}
-                  whileTap={{ scale: 0.96 }}
+                  whileHover={{ y: -3, scale: 1.03 }}
+                  whileTap={{ scale: 0.94 }}
                   className="glass-surface"
                   style={{
-                    width: '56px',
-                    height: '56px',
-                    borderRadius: '18px',
+                    width: '62px',
+                    height: '62px',
+                    borderRadius: '20px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     border: '1px dashed var(--surface-border)',
                     color: 'var(--text-muted)',
-                    background: 'rgba(255, 255, 255, 0.03)',
+                    background: 'rgba(255, 255, 255, 0.04)',
+                    boxShadow: 'var(--glass-shadow)',
                   }}
                   title="Add new bookmark"
                 >
-                  <Plus size={20} />
+                  <Plus size={22} />
                 </motion.div>
                 <span
                   style={{

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { X } from 'lucide-react';
 
 export const SearchBar: React.FC = () => {
@@ -58,33 +59,50 @@ export const SearchBar: React.FC = () => {
       }}
     >
       <form onSubmit={handleSearchSubmit}>
-        <div
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{
+            opacity: 1,
+            y: isFocused ? -2 : 0,
+            scale: isFocused ? 1.015 : 1,
+          }}
+          whileHover={{ y: -2, scale: 1.01 }}
+          whileTap={{ scale: 0.995 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 26 }}
           className="glass-surface"
           style={{
             position: 'relative',
             display: 'flex',
             alignItems: 'center',
-            padding: '8px 16px 8px 12px',
+            minHeight: '54px',
+            padding: '8px 18px 8px 14px',
             borderRadius: '9999px',
-            borderColor: isFocused ? 'var(--accent-primary)' : 'var(--surface-border)',
+            borderColor: isFocused ? 'rgba(66, 133, 244, 0.75)' : 'var(--surface-border)',
             boxShadow: isFocused
-              ? '0 0 0 3px var(--accent-glow), var(--glass-shadow)'
-              : 'var(--glass-shadow)',
+              ? '0 0 0 3px rgba(66, 133, 244, 0.28), 0 16px 36px -6px rgba(0, 0, 0, 0.45), var(--glass-specular)'
+              : 'var(--glass-shadow), var(--glass-specular)',
+            background: isFocused
+              ? 'rgba(18, 24, 38, 0.88)'
+              : 'var(--glass-surface)',
+            cursor: 'text',
           }}
+          onClick={() => inputRef.current?.focus()}
         >
-          {/* Authentic Google 4-Color Logo */}
-          <div
+          {/* Authentic Google 4-Color Logo with micro-motion */}
+          <motion.div
+            animate={{ scale: isFocused ? 1.08 : 1 }}
+            transition={{ type: 'spring', stiffness: 350, damping: 22 }}
             style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              padding: '6px 8px',
-              borderRadius: '50%',
+              padding: '4px 8px 4px 2px',
               flexShrink: 0,
+              userSelect: 'none',
             }}
             title="Google Search"
           >
-            <svg width="22" height="22" viewBox="0 0 24 24" style={{ display: 'block' }}>
+            <svg width="26" height="26" viewBox="0 0 24 24" style={{ display: 'block' }}>
               <path
                 fill="#4285F4"
                 d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"
@@ -102,7 +120,7 @@ export const SearchBar: React.FC = () => {
                 d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"
               />
             </svg>
-          </div>
+          </motion.div>
 
           {/* Search Input */}
           <div
@@ -121,44 +139,59 @@ export const SearchBar: React.FC = () => {
               onChange={(e) => setQuery(e.target.value)}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
-              placeholder="Search Google or type a URL..."
+              placeholder="Search Google or enter URL..."
               style={{
                 width: '100%',
                 background: 'transparent',
                 border: 'none',
                 outline: 'none',
                 color: 'var(--text-main)',
-                fontSize: '15px',
+                fontSize: '16px',
                 fontFamily: 'var(--font-sans)',
+                letterSpacing: '-0.2px',
               }}
             />
           </div>
 
-          {/* Clear Button when text is entered */}
-          {query && (
-            <div style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-              <button
-                type="button"
-                onClick={() => setQuery('')}
-                style={{
-                  background: 'rgba(255, 255, 255, 0.12)',
-                  border: 'none',
-                  borderRadius: '50%',
-                  width: '24px',
-                  height: '24px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'var(--text-muted)',
-                  cursor: 'pointer',
-                }}
-                aria-label="Clear query"
+          {/* Clear Button with fluid enter/exit motion */}
+          <AnimatePresence>
+            {query && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.6 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.6 }}
+                transition={{ duration: 0.15 }}
+                style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}
               >
-                <X size={13} />
-              </button>
-            </div>
-          )}
-        </div>
+                <motion.button
+                  whileHover={{ scale: 1.15, background: 'rgba(255, 255, 255, 0.22)' }}
+                  whileTap={{ scale: 0.9 }}
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setQuery('');
+                    inputRef.current?.focus();
+                  }}
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.14)',
+                    border: 'none',
+                    borderRadius: '50%',
+                    width: '26px',
+                    height: '26px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'var(--text-main)',
+                    cursor: 'pointer',
+                  }}
+                  aria-label="Clear query"
+                >
+                  <X size={14} />
+                </motion.button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
       </form>
     </div>
   );
